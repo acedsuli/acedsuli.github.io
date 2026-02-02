@@ -1,0 +1,80 @@
+/* Arcade Font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: black;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+h1 {
+  font-size: 80px;
+  margin: 0 0 40px 0;
+}
+
+p {
+  font-size: 18px;
+  margin: 0 0 30px 0;
+}
+
+button {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  background: white;
+  color: black;
+  cursor: pointer;
+}
+
+/* Needed for animations */
+h1, p, button {
+  display: inline-block;
+}
+
+/* ---------- IDLE FLOAT ---------- */
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+/* ---------- WIGGLE ---------- */
+.wiggling {
+  animation: wiggle 0.35s ease-in-out;
+}
+
+@keyframes wiggle {
+  0%   { transform: translateX(0) rotate(0deg); }
+  25%  { transform: translateX(-2px) rotate(-1deg); }
+  50%  { transform: translateX(2px) rotate(1deg); }
+  75%  { transform: translateX(-1px) rotate(-0.5deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+/* ---------- BUTTON PRESS ---------- */
+.pressed {
+  transform: scale(0.9);
+}
+
+/* ---------- STAR STYLING ---------- */
+.star {
+  width: 50px;              /* size of each star */
+  height: 50px;
+  pointer-events: none;     /* prevents stars from blocking clicks */
+  position: absolute;       /* allows stars to float anywhere */
+  z-index: 5;               /* keeps stars above background */
+  opacity: 0;               /* start invisible, fade in via JS */
+  transition: opacity 2s ease; /* smooth fade in/out */
+}
