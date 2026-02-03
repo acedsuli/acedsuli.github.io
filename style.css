@@ -89,10 +89,10 @@ h1, p, button {
   width: 100%;
   height: 100%;
   background: url('fountain.gif') center center / cover no-repeat;
-  opacity: 0;                 /* start invisible */
-  transition: opacity 5s ease; /* slow fade in/out */
-  pointer-events: none;       /* don’t block clicks */
-  z-index: 1;                 /* behind text/buttons */
+  opacity: 0;                  /* start invisible */
+  transition: opacity 5s ease; /* fade duration */
+  pointer-events: none;
+  z-index: -1;                 /* behind text/buttons but above body background */
 }
 
 /* Secret music button look */
