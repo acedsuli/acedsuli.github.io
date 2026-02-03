@@ -2,6 +2,7 @@
 const button = document.getElementById("musicBtn");
 const music = new Audio("star.mp3");
 const starContainer = document.getElementById("starContainer");
+const overlay = document.getElementById("secretBackground"); // background overlay div
 
 let playing = false;
 let starTimeout;
@@ -43,6 +44,7 @@ button.addEventListener("click", () => {
     // Show "pretty cool, right?" in secret mode
     if (secretMode) {
       showSecretMessage();
+      overlay.style.opacity = "0"; // fade out background when paused
     }
   }
   playing = !playing;
@@ -51,34 +53,19 @@ button.addEventListener("click", () => {
 function activateSecretMode() {
   secretMode = true;
   button.textContent = "SECRET MUSIC BUTTON";
-  button.style.background = "darkblue";
-  button.style.color = "white";
+  button.classList.add("secret"); // use CSS class for styling
 
-  // Fade in gif background
-  document.body.style.backgroundImage = "url('fountain.gif')"; // replace with actual gif filename
-  document.body.style.backgroundSize = "cover";
-  document.body.style.backgroundRepeat = "no-repeat";
-  document.body.style.backgroundPosition = "center";
-  document.body.style.transition = "background 3s ease";
-  document.body.style.opacity = "0.85"; // slight transparency
+  // Fade in overlay slowly
+  overlay.style.opacity = "0.85"; // semi-transparent fade in
 }
 
 function showSecretMessage() {
   const msg = document.createElement("p");
   msg.textContent = "pretty cool, right?";
-  msg.style.position = "absolute";
-  msg.style.bottom = "20px";
-  msg.style.left = "50%";
-  msg.style.transform = "translateX(-50%)";
-  msg.style.color = "white";
-  msg.style.opacity = "0";
-  msg.style.transition = "opacity 3s ease";
+  msg.className = "secret-message";
   document.body.appendChild(msg);
 
-  setTimeout(() => {
-    msg.style.opacity = "1";
-  }, 100);
-
+  setTimeout(() => { msg.style.opacity = "1"; }, 100);
   setTimeout(() => {
     msg.style.opacity = "0";
     setTimeout(() => msg.remove(), 3000);
