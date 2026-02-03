@@ -78,3 +78,28 @@ h1, p, button {
   opacity: 0;               /* start invisible, fade in via JS */
   transition: opacity 2s ease; /* smooth fade in/out */
 }
+
+/* ---------- SECRET MODE STYLING ---------- */
+
+/* Smooth background fade when secret mode activates */
+body {
+  transition: background 3s ease, opacity 3s ease;
+}
+
+/* Secret music button look */
+#musicBtn.secret {
+  background: darkblue;
+  color: white;
+}
+
+/* Secret message styling */
+.secret-message {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  opacity: 0;
+  transition: opacity 3s ease;
+  font-size: 14px;
+}
