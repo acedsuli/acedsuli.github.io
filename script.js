@@ -26,6 +26,15 @@ button.addEventListener("click", () => {
         starsVisible = true;
       }, 16000);
     }
+
+    // In secret mode, fade background back in when playing
+    if (secretMode) {
+      overlay.style.opacity = "0"; // reset
+      setTimeout(() => {
+        overlay.style.opacity = "0.85"; // fade in semi-transparent
+      }, 100);
+    }
+
   } else {
     // Pause music
     music.pause();
@@ -56,7 +65,10 @@ function activateSecretMode() {
   button.classList.add("secret"); // use CSS class for styling
 
   // Fade in overlay slowly
-  overlay.style.opacity = "0.85"; // semi-transparent fade in
+  overlay.style.opacity = "0"; // ensure starting state
+  setTimeout(() => {
+    overlay.style.opacity = "0.85"; // semi-transparent fade in
+  }, 100);
 }
 
 function showSecretMessage() {
