@@ -72,7 +72,7 @@ function activateSecretMode() {
 const lyrics = [
   { time: 0, text: "DOK" },
   { time: 3, text: "TRAZIM" },
-  { time: 6.3, text: "PUT" },
+  { time: 3.3, text: "PUT" },
   { time: 7.2, text: "PREMA" },
   { time: 8.7, text: "SVETU" },
   { time: 13.9, text: "TVOM" },
