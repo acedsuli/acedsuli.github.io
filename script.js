@@ -71,11 +71,11 @@ function activateSecretMode() {
 /* ---------- LYRIC SYNC ---------- */
 const lyrics = [
   { time: 0, text: "DOK" },
-  { time: 1, text: "TRAZIM" },
-  { time: 2, text: "PUT" },
-  { time: 3, text: "PREMA" },
-  { time: 4, text: "SVETU" },
-  { time: 5, text: "TVOM" },
+  { time: 2, text: "TRAZIM" },
+  { time: 4, text: "PUT" },
+  { time: 6, text: "PREMA" },
+  { time: 7, text: "SVETU" },
+  { time: 3, text: "TVOM" },
   { time: 7, text: "OSTAVI" },
   { time: 8, text: "TRAG" },
   { time: 9, text: "NA" },
