@@ -2,93 +2,125 @@
 const button = document.getElementById("musicBtn");
 const music = new Audio("star.mp3");
 const starContainer = document.getElementById("starContainer");
-const overlay = document.getElementById("secretBackground"); // background overlay div
+const overlay = document.getElementById("secretBackground"); 
+const lyricsDiv = document.getElementById("lyrics"); // lyric container
 
 let playing = false;
 let starTimeout;
 let starsVisible = false;
-let pauseCount = 0; // track pause/unpause cycles
+let pauseCount = 0;
 let secretMode = false;
 
+/* ---------- BUTTON CLICK ---------- */
 button.addEventListener("click", () => {
   if (!playing) {
     // Play music
     if (secretMode) {
-      music.src = "ostavi.mp3"; // switch to secret track
-    }
-    music.play();
-    button.textContent = secretMode ? "pause secret music" : "pause music";
+      playSecretSong(); // play secret track + lyrics
+    } else {
+      music.src = "star.mp3";
+      music.play();
+      button.textContent = "pause music";
 
-    // Delay star spawn by 16s (only in normal mode)
-    if (!secretMode) {
+      // Delay star spawn by 16s
       starTimeout = setTimeout(() => {
         spawnStars();
         starsVisible = true;
       }, 16000);
     }
-
-    // In secret mode, fade background back in when playing
-    if (secretMode) {
-      overlay.style.opacity = "0"; // reset
-      setTimeout(() => {
-        overlay.style.opacity = "0.85"; // fade in semi-transparent
-      }, 100);
-    }
-
   } else {
     // Pause music
     music.pause();
-    button.textContent = secretMode ? "SECRET MUSIC BUTTON" : "press this for music";
-
     clearTimeout(starTimeout);
     removeStars();
     starsVisible = false;
 
-    // Count pause/unpause cycles
     pauseCount++;
     if (pauseCount >= 5 && !secretMode) {
       activateSecretMode();
     }
 
-    // Show "pretty cool, right?" in secret mode
     if (secretMode) {
-      showSecretMessage();
-      overlay.style.opacity = "0"; // fade out background when paused
+      button.textContent = "SECRET MUSIC BUTTON";
+      overlay.style.opacity = "0"; // fade out background
+    } else {
+      button.textContent = "press this for music";
     }
   }
   playing = !playing;
 });
 
+/* ---------- SECRET MODE ---------- */
 function activateSecretMode() {
   secretMode = true;
   button.textContent = "SECRET MUSIC BUTTON";
-  button.classList.add("secret"); // use CSS class for styling
+  button.classList.add("secret");
 
-  // Fade in overlay slowly
-  overlay.style.opacity = "0"; // ensure starting state
+  // Fade out all normal text quickly
+  document.querySelectorAll("h1, p, button, .star").forEach(el => {
+    el.classList.add("fade-out");
+  });
+
+  // Black background stays, overlay fades in
+  overlay.style.opacity = "0";
   setTimeout(() => {
-    overlay.style.opacity = "0.85"; // semi-transparent fade in
+    overlay.style.opacity = "0.85";
   }, 100);
 }
 
-function showSecretMessage() {
-  const msg = document.createElement("p");
-  msg.textContent = "pretty cool, right?";
-  msg.className = "secret-message";
-  document.body.appendChild(msg);
+/* ---------- LYRIC SYNC ---------- */
+const lyrics = [
+  { time: 0, text: "DOK" },
+  { time: 1, text: "TRAZIM" },
+  { time: 2, text: "PUT" },
+  { time: 3, text: "PREMA" },
+  { time: 4, text: "SVETU" },
+  { time: 5, text: "TVOM" },
+  { time: 7, text: "OSTAVI" },
+  { time: 8, text: "TRAG" },
+  { time: 9, text: "NA" },
+  { time: 10, text: "PUTU" },
+  { time: 11, text: "SVOM" },
+  { time: 13, text: "KAD" },
+  { time: 14, text: "NISI" },
+  { time: 15, text: "TU" },
+  { time: 17, text: "SUNCE" },
+  { time: 18, text: "GUBI" },
+  { time: 19, text: "SVOJ" },
+  { time: 20, text: "SJAJ" },
+  { time: 22, text: "BEZ" },
+  { time: 23, text: "ZVJEDZA" },
+  { time: 24, text: "NOC" },
+  { time: 25, text: "NECE" },
+  { time: 26, text: "IMAT" },
+  { time: 27, text: "SVOJ" },
+  { time: 28, text: "KRAJ" },
+  { time: 30, text: "DA I' ZNAS KRAJ" },
+  { time: 33, text: "DA ZNAS" }
+];
 
-  setTimeout(() => { msg.style.opacity = "1"; }, 100);
-  setTimeout(() => {
-    msg.style.opacity = "0";
-    setTimeout(() => msg.remove(), 3000);
-  }, 4000);
+function playSecretSong() {
+  music.src = "ostavi.mp3"; // your intro audio file
+  music.play();
+
+  lyrics.forEach(line => {
+    setTimeout(() => {
+      lyricsDiv.textContent = line.text;
+      lyricsDiv.style.opacity = "1";
+
+      // fade out after 1s
+      setTimeout(() => {
+        lyricsDiv.style.opacity = "0";
+      }, 1000);
+    }, line.time * 1000);
+  });
 }
 
 /* ---------- STAR FUNCTIONS ---------- */
 function spawnStars() {
   for (let i = 0; i < 10; i++) {
     const star = document.createElement("img");
-    star.src = "star.png"; // replace with your actual star image
+    star.src = "star.png"; 
     star.className = "star floating";
     star.style.opacity = "0";
     star.style.position = "absolute";
@@ -96,7 +128,6 @@ function spawnStars() {
     star.style.left = `${Math.random() * 80 + 10}%`;
     starContainer.appendChild(star);
 
-    // Fade in
     setTimeout(() => {
       star.style.transition = "opacity 2s";
       star.style.opacity = "1";
