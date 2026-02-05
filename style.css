@@ -88,7 +88,7 @@ h1, p, button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('fountain.gif') center center / cover no-repeat;
+  background: url('your-gif.gif') center center / cover no-repeat;
   opacity: 0;                  /* start invisible */
   transition: opacity 5s ease; /* fade duration */
   pointer-events: none;
@@ -112,4 +112,24 @@ h1, p, button {
   transition: opacity 3s ease;
   font-size: 14px;
   z-index: 10;
+}
+
+/* ---------- FADE OUT EFFECT ---------- */
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* ---------- GIANT LYRIC TEXT ---------- */
+#lyrics {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px; /* bigger than title */
+  color: white;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 20;
 }
