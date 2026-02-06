@@ -115,7 +115,7 @@ function playSecretSong() {
       // Fade out after 1 second
       setTimeout(() => {
         lyricsDiv.style.opacity = "0";
-      }, 1000);
+      }, 150);
 
     }, line.time * 1000);
   });
