@@ -2,8 +2,8 @@
 const button = document.getElementById("musicBtn");
 const music = new Audio("star.mp3");
 const starContainer = document.getElementById("starContainer");
-const overlay = document.getElementById("secretBackground"); 
-const lyricsDiv = document.getElementById("lyrics"); // lyric container
+const overlay = document.getElementById("secretBackground");
+const lyricsDiv = document.getElementById("lyrics");
 
 let playing = false;
 let starTimeout;
@@ -14,22 +14,19 @@ let secretMode = false;
 /* ---------- BUTTON CLICK ---------- */
 button.addEventListener("click", () => {
   if (!playing) {
-    // Play music
     if (secretMode) {
-      playSecretSong(); // play secret track + lyrics
+      playSecretSong();
     } else {
       music.src = "star.mp3";
       music.play();
       button.textContent = "pause music";
 
-      // Delay star spawn by 16s
       starTimeout = setTimeout(() => {
         spawnStars();
         starsVisible = true;
       }, 16000);
     }
   } else {
-    // Pause music
     music.pause();
     clearTimeout(starTimeout);
     removeStars();
@@ -42,11 +39,12 @@ button.addEventListener("click", () => {
 
     if (secretMode) {
       button.textContent = "SECRET MUSIC BUTTON";
-      overlay.style.opacity = "0"; // fade out background
+      overlay.style.opacity = "0";
     } else {
       button.textContent = "press this for music";
     }
   }
+
   playing = !playing;
 });
 
@@ -56,12 +54,10 @@ function activateSecretMode() {
   button.textContent = "SECRET MUSIC BUTTON";
   button.classList.add("secret");
 
-  // Fade out all normal text quickly
   document.querySelectorAll("h1, p, button, .star").forEach(el => {
     el.classList.add("fade-out");
   });
 
-  // Black background stays, overlay fades in
   overlay.style.opacity = "0";
   setTimeout(() => {
     overlay.style.opacity = "0.85";
@@ -100,18 +96,27 @@ const lyrics = [
 ];
 
 function playSecretSong() {
-  music.src = "ostavi.mp3"; // your intro audio file
+  music.src = "ostavi.mp3";
   music.play();
 
   lyrics.forEach(line => {
     setTimeout(() => {
+
+      // Reset opacity instantly (fixes disappearing lyrics)
+      lyricsDiv.style.transition = "none";
+      lyricsDiv.style.opacity = "0";
+      void lyricsDiv.offsetWidth;
+      lyricsDiv.style.transition = "opacity 0.5s ease";
+
+      // Show new word
       lyricsDiv.textContent = line.text;
       lyricsDiv.style.opacity = "1";
 
-      // fade out after 1s
+      // Fade out after 1 second
       setTimeout(() => {
         lyricsDiv.style.opacity = "0";
       }, 1000);
+
     }, line.time * 1000);
   });
 }
@@ -120,7 +125,7 @@ function playSecretSong() {
 function spawnStars() {
   for (let i = 0; i < 10; i++) {
     const star = document.createElement("img");
-    star.src = "star.png"; 
+    star.src = "star.png";
     star.className = "star floating";
     star.style.opacity = "0";
     star.style.position = "absolute";
