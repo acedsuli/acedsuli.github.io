@@ -91,7 +91,7 @@ const lyrics = [
   { time: 47.1, text: "IMAT" },
   { time: 47.7, text: "SVOJ" },
   { time: 50.3, text: "KRAJ" },
-  { time: 56.2, text: "DA I' ZNAS KRAJ" },
+  { time: 56.2, text: "DA I/' ZNAS KRAJ" },
   { time: 59.2, text: "DA ZNAS" }
 ];
 
