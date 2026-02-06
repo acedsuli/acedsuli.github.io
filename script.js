@@ -18,6 +18,7 @@ button.addEventListener("click", () => {
       playSecretSong();
     } else {
       music.src = "star.mp3";
+      music.currentTime = 0;
       music.play();
       button.textContent = "pause music";
 
@@ -97,26 +98,15 @@ const lyrics = [
 
 function playSecretSong() {
   music.src = "ostavi.mp3";
+  music.currentTime = 0;
   music.play();
+
+  // Make sure lyrics are visible
+  lyricsDiv.style.opacity = "1";
 
   lyrics.forEach(line => {
     setTimeout(() => {
-
-      // Reset opacity instantly (fixes disappearing lyrics)
-      lyricsDiv.style.transition = "none";
-      lyricsDiv.style.opacity = "0";
-      void lyricsDiv.offsetWidth;
-      lyricsDiv.style.transition = "opacity 0.5s ease";
-
-      // Show new word
       lyricsDiv.textContent = line.text;
-      lyricsDiv.style.opacity = "1";
-
-      // Fade out after 1 second
-      setTimeout(() => {
-        lyricsDiv.style.opacity = "0";
-      }, 150);
-
     }, line.time * 1000);
   });
 }
