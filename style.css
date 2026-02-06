@@ -130,6 +130,6 @@ h1, p, button {
   color: white;
   text-align: center;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.15s ease;
   z-index: 20;
 }
