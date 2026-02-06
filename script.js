@@ -65,50 +65,81 @@ function activateSecretMode() {
   }, 100);
 }
 
-/* ---------- LYRIC SYNC ---------- */
+/* ---------- LYRIC SYNC (REAL-TIME ENGINE) ---------- */
 const lyrics = [
   { time: 0, text: "DOK" },
-  { time: 2, text: "TRAZIM" },
-  { time: 5.3, text: "PUT" },
+  { time: 3, text: "TRAZIM" },
+  { time: 6.3, text: "PUT" },
   { time: 7.2, text: "PREMA" },
-  { time: 8, text: "SVETU" },
+  { time: 8.7, text: "SVETU" },
   { time: 13.9, text: "TVOM" },
-  { time: 15, text: "OSTAVI" },
-  { time: 18, text: "TRAG" },
-  { time: 19, text: "NA" },
-  { time: 20.4, text: "PUTU" },
-  { time: 25.7, text: "SVOM" },
-  { time: 26.6, text: "KAD" },
-  { time: 28.2, text: "NISI" },
-  { time: 32.1, text: "TU" },
-  { time: 33.1, text: "SUNCE" },
-  { time: 33.2, text: "GUBI" },
-  { time: 33.7, text: "SVOJ" },
-  { time: 39.4, text: "SJAJ" },
-  { time: 39.9, text: "BEZ" },
-  { time: 41, text: "ZVJEDZA" },
-  { time: 44.7, text: "NOC" },
-  { time: 45.4, text: "NECE" },
-  { time: 46.1, text: "IMAT" },
-  { time: 46.7, text: "SVOJ" },
-  { time: 49.3, text: "KRAJ" },
-  { time: 55.2, text: "DA I/' ZNAS KRAJ" },
-  { time: 58.2, text: "DA ZNAS" }
+  { time: 15.5, text: "OSTAVI" },
+  { time: 19.1, text: "TRAG" },
+  { time: 20, text: "NA" },
+  { time: 21.4, text: "PUTU" },
+  { time: 26.7, text: "SVOM" },
+  { time: 27.6, text: "KAD" },
+  { time: 29.2, text: "NISI" },
+  { time: 33.1, text: "TU" },
+  { time: 34.1, text: "SUNCE" },
+  { time: 34.2, text: "GUBI" },
+  { time: 34.7, text: "SVOJ" },
+  { time: 40.4, text: "SJAJ" },
+  { time: 40.9, text: "BEZ" },
+  { time: 42, text: "ZVJEDZA" },
+  { time: 45.7, text: "NOC" },
+  { time: 46.4, text: "NECE" },
+  { time: 47.1, text: "IMAT" },
+  { time: 47.7, text: "SVOJ" },
+  { time: 50.3, text: "KRAJ" },
+  { time: 56.2, text: "DA I/' ZNAS KRAJ" },
+  { time: 59.2, text: "DA ZNAS" }
 ];
+
+let currentLyricIndex = -1;
 
 function playSecretSong() {
   music.src = "ostavi.mp3";
   music.currentTime = 0;
   music.play();
 
-  // Make sure lyrics are visible
-  lyricsDiv.style.opacity = "1";
+  currentLyricIndex = -1;
+  lyricsDiv.textContent = "";
+  lyricsDiv.style.opacity = 0;
 
-  lyrics.forEach(line => {
-    setTimeout(() => {
-      lyricsDiv.textContent = line.text;
-    }, line.time * 1000);
-  });
+  requestAnimationFrame(updateLyrics);
+}
+
+function updateLyrics() {
+  const t = music.currentTime;
+
+  // Find the current lyric
+  for (let i = 0; i < lyrics.length; i++) {
+    if (t >= lyrics[i].time && (i === lyrics.length - 1 || t < lyrics[i + 1].time)) {
+      if (currentLyricIndex !== i) {
+        currentLyricIndex = i;
+
+        // Fade in
+        lyricsDiv.style.transition = "opacity 0.3s ease";
+        lyricsDiv.style.opacity = 1;
+        lyricsDiv.textContent = lyrics[i].text;
+
+        // Fade out before next lyric
+        if (i < lyrics.length - 1) {
+          const nextTime = lyrics[i + 1].time;
+          const fadeOutStart = (nextTime - 0.25) * 1000;
+
+          setTimeout(() => {
+            lyricsDiv.style.transition = "opacity 0.3s ease";
+            lyricsDiv.style.opacity = 0;
+          }, fadeOutStart - t * 1000);
+        }
+      }
+      break;
+    }
+  }
+
+  requestAnimationFrame(updateLyrics);
 }
 
 /* ---------- STAR FUNCTIONS ---------- */
