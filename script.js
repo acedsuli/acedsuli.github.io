@@ -67,9 +67,9 @@ function activateSecretMode() {
 
 /* ---------- LYRIC SYNC (REAL-TIME ENGINE) ---------- */
 const lyrics = [
-  { time: 0.7, text: "DOK" },
-  { time: 2.5, text: "TRAZIM" },
-  { time: 3.8, text: "PUT" },
+  { time: 0.4, text: "DOK" },
+  { time: 2.1, text: "TRAZIM" },
+  { time: 4.2, text: "PUT" },
 { time: 7.3, text: "PREMA" },
 { time: 8.1, text: "SVETU" },
 { time: 9.8, text: "TVOM" },
